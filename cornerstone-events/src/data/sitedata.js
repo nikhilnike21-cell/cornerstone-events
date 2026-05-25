@@ -117,12 +117,11 @@ export const TESTIMONIALS = [
 ];
 
 export const GALLERY_IMAGES = [
-  { id: 1, src: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=900&q=80', label: 'Wedding Ceremony' },
-  { id: 2, src: 'https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=900&q=80', label: 'Floral Design' },
-  { id: 3, src: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=900&q=80', label: 'Gala Evening' },
-  { id: 4, src: 'https://images.unsplash.com/photo-1478146059778-26028b07395a?w=900&q=80', label: 'Table Settings' },
-  { id: 5, src: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=900&q=80', label: 'Corporate Event' },
-  { id: 6, src: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=900&q=80', label: 'Reception Décor' },
+  { id: 1, src: '/WhatsApp Image 2026-05-25 at 21.36.38 (1).jpeg', label: 'Gala Evening' },
+  { id: 2, src: '/WhatsApp Image 2026-05-25 at 21.36.38.jpeg', label: 'Wedding Reception' },
+  { id: 3, src: '/WhatsApp Image 2026-05-25 at 21.36.37 (2).jpeg', label: 'Floral Design' },
+  { id: 4, src: '/WhatsApp Image 2026-05-25 at 21.36.37 (1).jpeg', label: 'Corporate Event' },
+  { id: 5, src: '/WhatsApp Image 2026-05-25 at 21.36.37.jpeg', label: 'Event Registration' },
 ];
 
 export const STATS = [

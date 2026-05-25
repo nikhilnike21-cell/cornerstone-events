@@ -8,7 +8,7 @@ export default function Hero() {
       {/* Background image */}
       <div style={{
         position: 'absolute', inset: 0,
-        backgroundImage: `url('https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=1800&q=85')`,
+        backgroundImage: `url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=1800&q=85')`,
         backgroundSize: 'cover', backgroundPosition: 'center 30%',
         transform: 'scale(1.05)',
         animation: 'heroZoom 14s ease-in-out infinite alternate',
@@ -37,7 +37,7 @@ export default function Hero() {
           color: 'var(--color-gold)', marginBottom: 28,
           animation: 'fadeIn 1.2s ease forwards',
         }}>
-          ✦ &nbsp; Luxury Event Design &nbsp; ✦
+          ✦ &nbsp; Healthcare & Pharma Events &nbsp; ✦
         </p>
 
         <h1 style={{
@@ -47,8 +47,8 @@ export default function Hero() {
           color: 'var(--color-beige-lt)',
           animation: 'fadeUp 1s 0.2s ease forwards', opacity: 0,
         }}>
-          Every Moment,<br />
-          <em style={{ color: 'var(--color-gold)', fontStyle: 'italic' }}>Perfectly Placed.</em>
+          Medical Excellence<br />
+          <em style={{ color: 'var(--color-gold)', fontStyle: 'italic' }}>Flawlessly Executed.</em>
         </h1>
 
         <p style={{
@@ -57,7 +57,7 @@ export default function Hero() {
           lineHeight: 1.8, letterSpacing: '0.02em',
           animation: 'fadeUp 1s 0.5s ease forwards', opacity: 0,
         }}>
-          Cornerstone Event crafts extraordinary experiences — from intimate gatherings to grand celebrations — with unwavering artistry and care.
+          Specialized event management for doctors' conferences, CME programs, pharma product launches, and hospital engagements with precision and expertise.
         </p>
 
         <div style={{

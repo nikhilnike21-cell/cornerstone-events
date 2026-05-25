@@ -5,7 +5,7 @@ import StatsStrip from './components/Statsstrip';
 import Services from './components/Services';
 import About from './components/About';
 import Gallery from './components/Gallery';
-import Packages from './components/Pakages';
+import Contact from './components/Contact';
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
       <Services />
       <About />
       <Gallery />
-      <Packages />
+      <Contact />
     </div>
   );
 }

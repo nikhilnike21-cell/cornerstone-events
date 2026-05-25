@@ -127,7 +127,8 @@ export default function Navbar() {
         {NAV_LINKS.map(link => (
           <a
             key={link.href}
-            href={link.href}
+            href="#contact"
+            id="contact"
             onClick={() => handleNav(link.href)}
             style={{
               fontFamily: 'var(--font-display)', fontSize: 32,

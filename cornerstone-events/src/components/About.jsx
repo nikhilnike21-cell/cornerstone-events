@@ -16,8 +16,8 @@ export default function About() {
             height: 560, boxShadow: 'var(--shadow-card)',
           }}>
             <img
-              src="https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=900&q=80"
-              alt="About Cornerstone"
+              src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=900&q=80"
+              alt="Medical Events"
               style={{ width: '100%', height: '100%', objectFit: 'cover' }}
             />
           </div>
@@ -33,7 +33,7 @@ export default function About() {
             <div style={{
               fontFamily: 'var(--font-display)', fontStyle: 'italic',
               fontSize: 52, color: 'var(--color-gold)', lineHeight: 1,
-            }}>12</div>
+            }}>15</div>
             <div style={{
               fontFamily: 'var(--font-body)', fontSize: 10,
               letterSpacing: '0.3em', textTransform: 'uppercase',
@@ -61,8 +61,8 @@ export default function About() {
             fontWeight: 300, color: 'var(--color-beige-lt)', lineHeight: 1.15,
             marginBottom: 28,
           }}>
-            Where Vision Meets{' '}
-            <em style={{ color: 'var(--color-gold)', fontStyle: 'italic' }}>Flawless Execution</em>
+            Healthcare Events{' '}
+            <em style={{ color: 'var(--color-gold)', fontStyle: 'italic' }}>Redefined</em>
           </h2>
 
           <div style={{ width: 48, height: 1, background: 'var(--color-gold)', marginBottom: 32 }} />
@@ -71,18 +71,22 @@ export default function About() {
             fontFamily: 'var(--font-body)', fontSize: 15, fontWeight: 300,
             color: 'var(--color-beige)', lineHeight: 1.85, marginBottom: 20,
           }}>
-            Founded in 2013, Cornerstone Event was born from a single belief — that extraordinary events don't happen by chance, they are crafted with intention, passion, and an obsessive eye for detail.
+            Founded with a deep understanding of the healthcare and pharmaceutical industry, we specialize in creating impactful events that bring doctors, medical professionals, and industry leaders together.
           </p>
 
           <p style={{
             fontFamily: 'var(--font-body)', fontSize: 15, fontWeight: 300,
             color: 'var(--color-beige)', lineHeight: 1.85, marginBottom: 40,
           }}>
-            Our team of seasoned designers, coordinators, and experience architects have delivered over 500 events across India and beyond — each one a unique story, each one a masterpiece.
+            Our team has executed 400+ medical conferences, CME programs, pharma launches, and hospital engagement programs across 50+ cities. Every event reflects our commitment to regulatory excellence, clinical credibility, and seamless execution.
           </p>
 
           {/* Values */}
-          {['Artistry in every detail', 'Transparent partnership', 'Seamless from concept to close'].map((v, i) => (
+          {[
+            'Regulatory Compliance Expertise',
+            'Clinical Credibility & Standards',
+            'Seamless Multi-City Coordination'
+          ].map((v, i) => (
             <div key={i} style={{
               display: 'flex', alignItems: 'center', gap: 14, marginBottom: 14,
             }}>

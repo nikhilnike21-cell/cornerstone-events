@@ -11,11 +11,11 @@ export default function Gallery() {
           <p style={{
             fontFamily: 'var(--font-body)', fontSize: 10, letterSpacing: '0.45em',
             textTransform: 'uppercase', color: 'var(--color-gold)', marginBottom: 16,
-          }}>Our Work</p>
+          }}>Our Portfolio</p>
           <h2 style={{
             fontFamily: 'var(--font-display)', fontSize: 'clamp(38px, 5vw, 58px)',
             fontWeight: 300, color: 'var(--color-beige-lt)',
-          }}>A Glimpse of the Magic</h2>
+          }}>Events We've Orchestrated</h2>
         </div>
 
         {/* Masonry-ish grid */}

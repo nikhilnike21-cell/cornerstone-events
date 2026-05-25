@@ -12,11 +12,11 @@ export default function Services() {
           <p style={{
             fontFamily: 'var(--font-body)', fontSize: 10, letterSpacing: '0.45em',
             textTransform: 'uppercase', color: 'var(--color-gold)', marginBottom: 16,
-          }}>What We Do</p>
+          }}>What We Specialize In</p>
           <h2 style={{
             fontFamily: 'var(--font-display)', fontSize: 'clamp(38px, 5vw, 58px)',
             fontWeight: 300, color: 'var(--color-beige-lt)',
-          }}>Services We Offer</h2>
+          }}>Healthcare & Pharma Solutions</h2>
           <div style={{
             width: 60, height: 1, background: 'var(--color-gold)',
             marginTop: 24, marginLeft: 0,
