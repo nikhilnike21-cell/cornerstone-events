@@ -112,7 +112,7 @@ export default function Hero() {
           transform: `scale(1.12) translateY(${scrollY * 0.22}px)`,
           transition: 'transform 0.05s linear',
           willChange: 'transform',
-          animation: 'heroZoom 18s ease-in-out infinite alternate',
+          animation: 'heroZoom 8s ease-in-out infinite alternate',
         }}
       />
 
@@ -182,7 +182,7 @@ export default function Hero() {
           animation: 'fadeIn 1.4s ease forwards',
           opacity: 0,
         }}>
-          ✦ &nbsp; Healthcare & Pharma Events &nbsp; ✦
+          ✦ &nbsp; Corporate . Healthcare . Pharma Events &nbsp; ✦
         </p>
 
         {/* Headline */}
@@ -193,7 +193,7 @@ export default function Hero() {
           color: 'var(--color-beige-lt)',
           animation: 'fadeUp 1s 0.25s ease forwards', opacity: 0,
         }}>
-          Medical Excellence<br />
+          Excellence<br />
           <em
             className="shimmer-text"
             style={{ fontStyle: 'italic' }}
@@ -223,7 +223,7 @@ export default function Hero() {
           lineHeight: 1.85, letterSpacing: '0.02em',
           animation: 'fadeUp 1s 0.55s ease forwards', opacity: 0,
         }}>
-          Specialized event management for doctors' conferences, CME programs, pharma product launches, and hospital engagements — precision you can trust.
+          Specialized event management for corporates, doctors' conferences, CME programs, pharma product launches, and hospital engagements — precision you can trust.
         </p>
 
         {/* CTA buttons */}

@@ -77,7 +77,7 @@ export default function About() {
               fontFamily: 'var(--font-display)', fontStyle: 'italic',
               fontSize: 52, color: 'var(--color-gold)', lineHeight: 1,
               filter: 'drop-shadow(0 0 12px rgba(201,169,110,0.3))',
-            }}>15</div>
+            }}>5+</div>
             <div style={{
               fontFamily: 'var(--font-body)', fontSize: 10,
               letterSpacing: '0.3em', textTransform: 'uppercase',
@@ -142,7 +142,7 @@ export default function About() {
             fontFamily: 'var(--font-body)', fontSize: 15, fontWeight: 300,
             color: 'var(--color-beige)', lineHeight: 1.85, marginBottom: 40,
           }}>
-            Our team has executed 400+ medical conferences, CME programs, pharma launches, and hospital engagement programs across 50+ cities — every event reflecting our commitment to regulatory excellence and seamless execution.
+            Our team has executed 50+ corporate events, medical conferences, CME programs, pharma launches, and hospital engagement programs across 5+ cities — every event reflecting our commitment to regulatory excellence and seamless execution.
           </p>
 
           {/* Values — stagger in */}

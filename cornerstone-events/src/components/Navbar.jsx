@@ -114,12 +114,12 @@ export default function Navbar() {
           }}
             onMouseEnter={e => e.currentTarget.style.textShadow = '0 0 20px rgba(201,169,110,0.5)'}
             onMouseLeave={e => e.currentTarget.style.textShadow = 'none'}
-          >CORNERSTONE</span>
+          >CORNERSTONE EVENTS</span>
           <span style={{
             fontFamily: 'var(--font-body)', fontSize: 9.5, fontWeight: 400,
             letterSpacing: '0.35em', textTransform: 'uppercase',
             color: 'var(--color-muted)', marginTop: -2,
-          }}>EVENT DESIGN</span>
+          }}>EVENT PLAN . DESIGN . EXECUTE</span>
         </a>
 
         {/* Desktop Links */}
