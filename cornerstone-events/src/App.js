@@ -1,4 +1,5 @@
 import './App.css';
+import CustomCursor from './components/CustomCursor';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import StatsStrip from './components/Statsstrip';
@@ -10,6 +11,7 @@ import Contact from './components/Contact';
 function App() {
   return (
     <div className="App">
+      <CustomCursor />
       <Navbar />
       <Hero />
       <StatsStrip />
