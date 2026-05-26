@@ -125,8 +125,8 @@ export const GALLERY_IMAGES = [
 ];
 
 export const STATS = [
-  { value: '500+', label: 'Events Delivered' },
-  { value: '12',   label: 'Years of Excellence' },
+  { value: '50+', label: 'Events Delivered' },
+  { value: '5',   label: 'Years of Excellence' },
   { value: '98%',  label: 'Client Satisfaction' },
-  { value: '30+',  label: 'Cities Covered' },
+  { value: '5+',  label: 'Cities Covered' },
 ];
