@@ -45,10 +45,10 @@ function wrapEmail(content) {
           <tr>
             <td style="background:${SURFACE};padding:36px 48px;border-bottom:1px solid #2e2720;text-align:center;">
               <div style="font-size:22px;font-weight:600;letter-spacing:0.1em;color:${GOLD};margin-bottom:4px;">
-                CORNERSTONE
+                CORNERSTONE EVENTS
               </div>
               <div style="font-size:10px;letter-spacing:0.4em;text-transform:uppercase;color:${MUTED};">
-                EVENT DESIGN
+                EVENT PLAN DESIGN EXECUTE
               </div>
             </td>
           </tr>

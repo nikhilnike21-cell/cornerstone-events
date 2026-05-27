@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 
 // ── Point this at your running backend ──
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5003';
 
 export default function Contact() {
   const [formData, setFormData] = useState({ name: '', email: '', phone: '', message: '' });
