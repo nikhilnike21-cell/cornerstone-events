@@ -9,7 +9,7 @@
     "build": "echo 'No build needed for Node.js server'"
   },
   "engines": {
-    "node": "18.x"
+    "node": "24.x"
   },
   "dependencies": {
     "cors": "^2.8.5",
