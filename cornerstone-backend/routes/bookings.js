@@ -26,42 +26,42 @@ router.post('/', async (req, res) => {
   try {
     const { name, email, phone, message } = req.body;
 
-    // Validate required fields
     if (!name?.trim() || !email?.trim() || !message?.trim()) {
       return res.status(400).json({
         error: 'Name, email, and message are required.',
       });
     }
 
-    // Create booking document
     const booking = await Booking.create({
-      name:         name.trim(),
-      email:        email.trim(),
-      phone:        phone?.trim() || null,
-      message:      message.trim(),
+      name: name.trim(),
+      email: email.trim(),
+      phone: phone?.trim() || null,
+      message: message.trim(),
       confirmToken: uuidv4(),
-      cancelToken:  uuidv4(),
+      cancelToken: uuidv4(),
     });
 
-    // Build one-click action URLs
-    const base       = process.env.BACKEND_URL;
+    const base = process.env.BACKEND_URL;
     const confirmUrl = `${base}/api/bookings/action/confirm/${booking.confirmToken}`;
-    const cancelUrl  = `${base}/api/bookings/action/cancel/${booking.cancelToken}`;
+    const cancelUrl = `${base}/api/bookings/action/cancel/${booking.cancelToken}`;
 
-    // Send emails concurrently — non-blocking
-    Promise.all([
-      sendAdminNotification(booking, confirmUrl, cancelUrl),
-      sendUserAcknowledgement(booking),
-    ]).catch(err => console.error('Email error (non-fatal):', err.message));
+    // ✅ AWAIT the emails before sending response
+    try {
+      await Promise.all([
+        sendAdminNotification(booking, confirmUrl, cancelUrl),
+        sendUserAcknowledgement(booking),
+      ]);
+    } catch (err) {
+      console.error('Email error:', err.message);
+    }
 
     return res.status(201).json({
-      success:   true,
-      message:   'Booking received! We will get back to you within 24 hours.',
+      success: true,
+      message: 'Booking received! We will get back to you within 24 hours.',
       bookingId: booking._id,
     });
 
   } catch (err) {
-    // Mongoose validation error
     if (err.name === 'ValidationError') {
       const messages = Object.values(err.errors).map(e => e.message);
       return res.status(400).json({ error: messages.join(', ') });
