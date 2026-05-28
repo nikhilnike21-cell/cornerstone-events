@@ -275,7 +275,17 @@ export default function Contact() {
               onClick={handleSubmit}
               disabled={status === 'loading'}
               onMouseMove={handleSubmitMove}
-              onMouseLeave={handleSubmitLeave}
+              onMouseEnter={e => {
+                if (status !== 'loading') {
+                  e.currentTarget.style.background = 'var(--color-gold-lt)';
+                  e.currentTarget.style.boxShadow = '0 8px 40px rgba(201,169,110,0.4)';
+                }
+              }}
+              onMouseLeave={e => {
+                handleSubmitLeave();
+                e.currentTarget.style.background = 'var(--color-gold)';
+                e.currentTarget.style.boxShadow = 'none';
+              }}
               style={{
                 width: '100%',
                 fontFamily: 'var(--font-body)', fontSize: 12, fontWeight: 500,
@@ -289,18 +299,6 @@ export default function Contact() {
                 transition: 'transform 0.4s var(--ease-out), background 0.25s, opacity 0.25s',
                 opacity: status === 'loading' ? 0.7 : 1,
               }}
-              onMouseEnter={e => {
-                if (status !== 'loading') {
-                  e.currentTarget.style.background = 'var(--color-gold-lt)';
-                  e.currentTarget.style.boxShadow = '0 8px 40px rgba(201,169,110,0.4)';
-                }
-              }}
-             onMouseLeave={e => {
-                    handleSubmitLeave();
-                    e.currentTarget.style.background = 'transparent';
-                    e.currentTarget.style.color = 'var(--color-gold)';
-                    e.currentTarget.style.boxShadow = 'none';
-                  }}
             >
               {status === 'loading' ? 'Submitting...' : 'Send Inquiry'}
             </button>
