@@ -43,7 +43,7 @@ function AnimatedCounter({ value, isVisible }) {
     };
     raf.current = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf.current);
-  }, [isVisible]);
+  }, [isVisible, num]);
 
   return (
     <span style={{

@@ -106,7 +106,7 @@ export default function Navbar() {
         }} />
 
         {/* Logo */}
-        <a href="#" style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+        <a href="\" style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
           <span style={{
             fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 600,
             letterSpacing: '0.06em', color: 'var(--color-gold)',

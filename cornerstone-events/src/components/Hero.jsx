@@ -23,7 +23,7 @@ function MagneticButton({ href, children, filled = false, style: extraStyle = {}
       ref={ref}
       href={href}
       onMouseMove={handleMove}
-      onMouseLeave={handleLeave}
+      
       style={{
         display: 'inline-block',
         fontFamily: 'var(--font-body)', fontSize: 12, fontWeight: 500,
