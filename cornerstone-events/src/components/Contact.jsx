@@ -295,10 +295,12 @@ export default function Contact() {
                   e.currentTarget.style.boxShadow = '0 8px 40px rgba(201,169,110,0.4)';
                 }
               }}
-              onMouseLeave={e => {
-                e.currentTarget.style.background = 'var(--color-gold)';
-                e.currentTarget.style.boxShadow = 'none';
-              }}
+             onMouseLeave={e => {
+                    handleSubmitLeave();
+                    e.currentTarget.style.background = 'transparent';
+                    e.currentTarget.style.color = 'var(--color-gold)';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }}
             >
               {status === 'loading' ? 'Submitting...' : 'Send Inquiry'}
             </button>
