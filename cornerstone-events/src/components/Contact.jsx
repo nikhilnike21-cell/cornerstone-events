@@ -159,7 +159,7 @@ export default function Contact() {
 
             <div style={{ width: 48, height: 1, background: 'var(--color-border)', marginBottom: 36 }} />
 
-            <div>
+            <div style={{ marginBottom: 36 }}>
               <p style={{
                 fontFamily: 'var(--font-body)', fontSize: 10, letterSpacing: '0.35em',
                 textTransform: 'uppercase', color: 'var(--color-gold)', marginBottom: 10,
@@ -174,6 +174,99 @@ export default function Contact() {
                 onMouseEnter={e => e.currentTarget.style.color = 'var(--color-gold)'}
                 onMouseLeave={e => e.currentTarget.style.color = 'var(--color-beige-lt)'}
               >cornerstoneevents0@gmail.com</a>
+            </div>
+
+            <div style={{ width: 48, height: 1, background: 'var(--color-border)', marginBottom: 36 }} />
+
+            {/* Social Links */}
+            <div>
+              <p style={{
+                fontFamily: 'var(--font-body)', fontSize: 10, letterSpacing: '0.35em',
+                textTransform: 'uppercase', color: 'var(--color-gold)', marginBottom: 16,
+              }}>Follow Us</p>
+              <div style={{ display: 'flex', gap: 16 }}>
+
+                {/* Instagram */}
+                <a
+                  href="https://www.instagram.com/cornerstoneevents.in?igsh=MTc5ejBxODBuNWgxZg=="
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="Cornerstone Events on Instagram"
+                  style={{
+                    display: 'flex', alignItems: 'center', gap: 10,
+                    padding: '10px 18px',
+                    border: '1px solid var(--color-border)',
+                    borderRadius: 'var(--radius-sm)',
+                    color: 'var(--color-muted)',
+                    fontFamily: 'var(--font-body)', fontSize: 12,
+                    letterSpacing: '0.15em', textTransform: 'uppercase',
+                    transition: 'border-color 0.25s, color 0.25s, background 0.25s, box-shadow 0.25s',
+                    cursor: 'none',
+                    textDecoration: 'none',
+                  }}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.borderColor = '#E1306C';
+                    e.currentTarget.style.color = '#E1306C';
+                    e.currentTarget.style.background = 'rgba(225,48,108,0.06)';
+                    e.currentTarget.style.boxShadow = '0 0 20px rgba(225,48,108,0.15)';
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.borderColor = 'var(--color-border)';
+                    e.currentTarget.style.color = 'var(--color-muted)';
+                    e.currentTarget.style.background = 'transparent';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }}
+                >
+                  {/* Instagram SVG icon */}
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                    <circle cx="12" cy="12" r="4"/>
+                    <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"/>
+                  </svg>
+                  Instagram
+                </a>
+
+                {/* LinkedIn */}
+                <a
+                  href="https://www.linkedin.com/company/cornerstoneevents-in"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  title="Cornerstone Events on LinkedIn"
+                  style={{
+                    display: 'flex', alignItems: 'center', gap: 10,
+                    padding: '10px 18px',
+                    border: '1px solid var(--color-border)',
+                    borderRadius: 'var(--radius-sm)',
+                    color: 'var(--color-muted)',
+                    fontFamily: 'var(--font-body)', fontSize: 12,
+                    letterSpacing: '0.15em', textTransform: 'uppercase',
+                    transition: 'border-color 0.25s, color 0.25s, background 0.25s, box-shadow 0.25s',
+                    cursor: 'none',
+                    textDecoration: 'none',
+                  }}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.borderColor = '#0A66C2';
+                    e.currentTarget.style.color = '#0A66C2';
+                    e.currentTarget.style.background = 'rgba(10,102,194,0.06)';
+                    e.currentTarget.style.boxShadow = '0 0 20px rgba(10,102,194,0.15)';
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.borderColor = 'var(--color-border)';
+                    e.currentTarget.style.color = 'var(--color-muted)';
+                    e.currentTarget.style.background = 'transparent';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }}
+                >
+                  {/* LinkedIn SVG icon */}
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                    <rect x="2" y="9" width="4" height="12"/>
+                    <circle cx="4" cy="4" r="2"/>
+                  </svg>
+                  LinkedIn
+                </a>
+
+              </div>
             </div>
           </div>
 
