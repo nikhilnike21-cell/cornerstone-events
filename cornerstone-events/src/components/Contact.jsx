@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 
-// ── Point this at your running backend ──
+// ── API URL from environment or fallback ──
 const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5003';
 
 export default function Contact() {
@@ -31,6 +31,13 @@ export default function Contact() {
       return;
     }
 
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setErrMsg('Please enter a valid email address.');
+      return;
+    }
+
     setStatus('loading');
     setErrMsg('');
 
@@ -51,7 +58,13 @@ export default function Contact() {
 
       setStatus('success');
       setFormData({ name: '', email: '', phone: '', message: '' });
+      
+      // Reset success message after 6 seconds
+      setTimeout(() => {
+        setStatus('idle');
+      }, 6000);
     } catch (err) {
+      console.error('Booking error:', err);
       setErrMsg('Network error — please check your connection and try again.');
       setStatus('error');
     }
@@ -149,203 +162,165 @@ export default function Contact() {
             <div>
               <p style={{
                 fontFamily: 'var(--font-body)', fontSize: 10, letterSpacing: '0.35em',
-                textTransform: 'uppercase', color: 'var(--color-gold)', marginBottom: 18,
-              }}>Follow Us</p>
-              <div style={{ display: 'flex', gap: 16 }}>
-                {[
-                  {
-                    href: 'https://www.instagram.com/cornerstoneevents.in?igsh=MTk3eWV6dGNleDJ0ZA==',
-                    label: 'Instagram',
-                    icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor"/></svg>,
-                  },
-                  {
-                    href: 'https://www.linkedin.com/company/122604229/admin/dashboard/',
-                    label: 'LinkedIn',
-                    icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>,
-                  },
-                ].map(social => (
-                  <a key={social.label} href={social.href} target="_blank" rel="noopener noreferrer"
-                    style={{
-                      display: 'flex', alignItems: 'center', gap: 10,
-                      padding: '10px 20px',
-                      border: '1px solid var(--color-border)',
-                      borderRadius: 'var(--radius-sm)',
-                      background: 'var(--color-surface)',
-                      color: 'var(--color-beige)',
-                      fontFamily: 'var(--font-body)', fontSize: 12,
-                      letterSpacing: '0.12em', textTransform: 'uppercase',
-                      transition: 'border-color 0.25s, color 0.25s, box-shadow 0.3s, transform 0.2s',
-                      cursor: 'none',
-                    }}
-                    onMouseEnter={e => { e.currentTarget.style.borderColor='var(--color-gold)'; e.currentTarget.style.color='var(--color-gold)'; e.currentTarget.style.transform='translateY(-2px)'; }}
-                    onMouseLeave={e => { e.currentTarget.style.borderColor='var(--color-border)'; e.currentTarget.style.color='var(--color-beige)'; e.currentTarget.style.transform='translateY(0)'; }}
-                  >
-                    {social.icon}{social.label}
-                  </a>
-                ))}
-              </div>
+                textTransform: 'uppercase', color: 'var(--color-gold)', marginBottom: 10,
+              }}>Email</p>
+              <a
+                href="mailto:cornerstoneevents0@gmail.com"
+                style={{
+                  fontFamily: 'var(--font-display)', fontSize: 16,
+                  color: 'var(--color-beige-lt)', letterSpacing: '0.02em',
+                  transition: 'color 0.2s', cursor: 'none',
+                }}
+                onMouseEnter={e => e.currentTarget.style.color = 'var(--color-gold)'}
+                onMouseLeave={e => e.currentTarget.style.color = 'var(--color-beige-lt)'}
+              >cornerstoneevents0@gmail.com</a>
             </div>
           </div>
 
           {/* Right — form */}
           <div style={{
-            background: 'var(--color-surface)', border: '1px solid var(--color-border)',
-            borderRadius: 'var(--radius-md)', padding: '48px',
             opacity: visible ? 1 : 0,
             transform: visible ? 'translateX(0)' : 'translateX(40px)',
             transition: 'opacity 0.8s 0.25s var(--ease-out), transform 0.8s 0.25s var(--ease-out)',
           }}>
-
-            {status === 'success' ? (
-              /* ── Success state ── */
-              <div style={{ textAlign: 'center', padding: '40px 0' }}>
-                <div style={{
-                  width: 56, height: 56, borderRadius: '50%',
-                  border: '1px solid var(--color-gold)',
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  margin: '0 auto 24px', color: 'var(--color-gold)', fontSize: 22,
-                  animation: 'goldPulse 2s ease-in-out infinite',
-                }}>✓</div>
-                <h3 style={{
-                  fontFamily: 'var(--font-display)', fontSize: 28, fontWeight: 300,
-                  color: 'var(--color-beige-lt)', marginBottom: 12,
-                }}>Message Received</h3>
-                <p style={{ fontFamily: 'var(--font-body)', fontSize: 14, color: 'var(--color-muted)', marginBottom: 28 }}>
-                  We'll be in touch within 24 hours. Check your inbox for a confirmation email.
-                </p>
-                <button
-                  onClick={() => setStatus('idle')}
-                  style={{
-                    background: 'none', border: '1px solid var(--color-border)',
-                    color: 'var(--color-muted)', borderRadius: 'var(--radius-sm)',
-                    padding: '10px 24px', fontFamily: 'var(--font-body)',
-                    fontSize: 11, letterSpacing: '0.2em', textTransform: 'uppercase',
-                    cursor: 'none', transition: 'border-color 0.2s, color 0.2s',
-                  }}
-                  onMouseEnter={e => { e.currentTarget.style.borderColor='var(--color-gold)'; e.currentTarget.style.color='var(--color-gold)'; }}
-                  onMouseLeave={e => { e.currentTarget.style.borderColor='var(--color-border)'; e.currentTarget.style.color='var(--color-muted)'; }}
-                >Send Another</button>
-              </div>
-            ) : (
-              /* ── Form ── */
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-                  {[
-                    { name:'name',  label:'Name',  type:'text',  placeholder:'Your name' },
-                    { name:'email', label:'Email', type:'email', placeholder:'your@email.com' },
-                  ].map(f => (
-                    <div key={f.name}>
-                      <label style={{
-                        display:'block', fontFamily:'var(--font-body)', fontSize:10,
-                        letterSpacing:'0.3em', textTransform:'uppercase',
-                        color:'var(--color-gold)', marginBottom:8,
-                      }}>{f.label}</label>
-                      <input
-                        type={f.type} name={f.name}
-                        placeholder={f.placeholder}
-                        value={formData[f.name]}
-                        onChange={handleChange}
-                        style={inputStyle} onFocus={onFocus} onBlur={onBlur}
-                        disabled={status === 'loading'}
-                      />
-                    </div>
-                  ))}
-                </div>
-
-                <div>
-                  <label style={{
-                    display:'block', fontFamily:'var(--font-body)', fontSize:10,
-                    letterSpacing:'0.3em', textTransform:'uppercase',
-                    color:'var(--color-gold)', marginBottom:8,
-                  }}>Phone (Optional)</label>
-                  <input
-                    type="tel" name="phone" placeholder="+91 XXXXX XXXXX"
-                    value={formData.phone} onChange={handleChange}
-                    style={inputStyle} onFocus={onFocus} onBlur={onBlur}
-                    disabled={status === 'loading'}
-                  />
-                </div>
-
-                <div>
-                  <label style={{
-                    display:'block', fontFamily:'var(--font-body)', fontSize:10,
-                    letterSpacing:'0.3em', textTransform:'uppercase',
-                    color:'var(--color-gold)', marginBottom:8,
-                  }}>Message</label>
-                  <textarea
-                    name="message" placeholder="Tell us about your event..."
-                    rows={5} value={formData.message} onChange={handleChange}
-                    style={{ ...inputStyle, resize:'vertical', minHeight:120 }}
-                    onFocus={onFocus} onBlur={onBlur}
-                    disabled={status === 'loading'}
-                  />
-                </div>
-
-                {/* Error */}
-                {errMsg && (
-                  <p style={{
-                    fontFamily:'var(--font-body)', fontSize:13,
-                    color:'#e05c5c', marginTop:-8,
-                  }}>{errMsg}</p>
-                )}
-
-                {/* Magnetic submit */}
-                <button
-                  ref={submitRef}
-                  onClick={handleSubmit}
-                  onMouseMove={handleSubmitMove}
-                  onMouseLeave={(e) => {
-                    handleSubmitLeave();
-                    e.currentTarget.style.background = 'transparent';
-                    e.currentTarget.style.color = 'var(--color-gold)';
-                    e.currentTarget.style.boxShadow = 'none';
-                  }}
-                  onMouseEnter={e => {
-                    e.currentTarget.style.background = 'var(--color-gold)';
-                    e.currentTarget.style.color = 'var(--color-bg)';
-                    e.currentTarget.style.boxShadow = '0 8px 32px rgba(201,169,110,0.35)';
-                  }}
-                  disabled={status === 'loading'}
-                  style={{
-                    marginTop: 8, padding: '16px 42px',
-                    background: 'transparent', border: '1px solid var(--color-gold)',
-                    borderRadius: 'var(--radius-sm)', color: 'var(--color-gold)',
-                    fontFamily: 'var(--font-body)', fontSize: 11, letterSpacing: '0.35em',
-                    textTransform: 'uppercase', cursor: status === 'loading' ? 'wait' : 'none',
-                    transition: 'transform 0.4s var(--ease-out), background 0.25s, color 0.25s, box-shadow 0.3s',
-                    alignSelf: 'flex-start', willChange: 'transform',
-                    opacity: status === 'loading' ? 0.6 : 1,
-                  }}
-                >
-                  {status === 'loading' ? 'Sending…' : 'Send Message'}
-                </button>
+            
+            {/* Success message */}
+            {status === 'success' && (
+              <div style={{
+                marginBottom: 24, padding: 20,
+                background: 'rgba(76,175,122,0.12)',
+                border: '1px solid var(--color-success)',
+                borderRadius: 'var(--radius-sm)',
+                color: '#4caf7a',
+                fontFamily: 'var(--font-body)', fontSize: 14,
+                animation: 'slideDown 0.4s var(--ease-out)',
+              }}>
+                ✓ Thank you! We'll get back to you within 24 hours.
               </div>
             )}
-          </div>
-        </div>
 
-        {/* Footer strip */}
-        <div style={{
-          marginTop: 100, paddingTop: 40,
-          borderTop: '1px solid var(--color-border)',
-          display: 'flex', justifyContent: 'space-between',
-          alignItems: 'center', flexWrap: 'wrap', gap: 16,
-          opacity: visible ? 1 : 0, transition: 'opacity 1s 0.5s',
-        }}>
-          <p style={{ fontFamily:'var(--font-display)', fontSize:18, color:'var(--color-gold)', letterSpacing:'0.08em' }}>
-            Cornerstone Event Design
-          </p>
-          <p style={{ fontFamily:'var(--font-body)', fontSize:12, color:'var(--color-muted)', letterSpacing:'0.06em' }}>
-            © {new Date().getFullYear()} · All rights reserved
-          </p>
+            {/* Error message */}
+            {status === 'error' && (
+              <div style={{
+                marginBottom: 24, padding: 20,
+                background: 'rgba(224,92,92,0.12)',
+                border: '1px solid var(--color-error)',
+                borderRadius: 'var(--radius-sm)',
+                color: '#e05c5c',
+                fontFamily: 'var(--font-body)', fontSize: 14,
+                animation: 'slideDown 0.4s var(--ease-out)',
+              }}>
+                ✕ {errMsg}
+              </div>
+            )}
+
+            {/* Form fields */}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 20 }}>
+              <input
+                type="text"
+                name="name"
+                placeholder="Your Name"
+                value={formData.name}
+                onChange={handleChange}
+                onFocus={onFocus}
+                onBlur={onBlur}
+                disabled={status === 'loading'}
+                style={{ ...inputStyle, opacity: status === 'loading' ? 0.6 : 1 }}
+              />
+              <input
+                type="email"
+                name="email"
+                placeholder="Your Email"
+                value={formData.email}
+                onChange={handleChange}
+                onFocus={onFocus}
+                onBlur={onBlur}
+                disabled={status === 'loading'}
+                style={{ ...inputStyle, opacity: status === 'loading' ? 0.6 : 1 }}
+              />
+            </div>
+
+            <input
+              type="tel"
+              name="phone"
+              placeholder="Phone (optional)"
+              value={formData.phone}
+              onChange={handleChange}
+              onFocus={onFocus}
+              onBlur={onBlur}
+              disabled={status === 'loading'}
+              style={{ ...inputStyle, marginBottom: 20, opacity: status === 'loading' ? 0.6 : 1 }}
+            />
+
+            <textarea
+              name="message"
+              placeholder="Tell us about your event..."
+              value={formData.message}
+              onChange={handleChange}
+              onFocus={onFocus}
+              onBlur={onBlur}
+              disabled={status === 'loading'}
+              style={{
+                ...inputStyle,
+                minHeight: 140,
+                resize: 'vertical',
+                marginBottom: 28,
+                opacity: status === 'loading' ? 0.6 : 1,
+              }}
+            />
+
+            {/* Submit button */}
+            <button
+              ref={submitRef}
+              onClick={handleSubmit}
+              disabled={status === 'loading'}
+              onMouseMove={handleSubmitMove}
+              onMouseLeave={handleSubmitLeave}
+              style={{
+                width: '100%',
+                fontFamily: 'var(--font-body)', fontSize: 12, fontWeight: 500,
+                letterSpacing: '0.22em', textTransform: 'uppercase',
+                padding: '16px 0',
+                background: status === 'loading' ? 'var(--color-muted)' : 'var(--color-gold)',
+                color: 'var(--color-bg)',
+                border: 'none',
+                borderRadius: 'var(--radius-sm)',
+                cursor: status === 'loading' ? 'not-allowed' : 'none',
+                transition: 'transform 0.4s var(--ease-out), background 0.25s, opacity 0.25s',
+                opacity: status === 'loading' ? 0.7 : 1,
+              }}
+              onMouseEnter={e => {
+                if (status !== 'loading') {
+                  e.currentTarget.style.background = 'var(--color-gold-lt)';
+                  e.currentTarget.style.boxShadow = '0 8px 40px rgba(201,169,110,0.4)';
+                }
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.background = 'var(--color-gold)';
+                e.currentTarget.style.boxShadow = 'none';
+              }}
+            >
+              {status === 'loading' ? 'Submitting...' : 'Send Inquiry'}
+            </button>
+
+            <p style={{
+              fontFamily: 'var(--font-body)', fontSize: 11,
+              color: 'var(--color-muted)', marginTop: 16, textAlign: 'center',
+            }}>We respect your privacy. Your details are secure.</p>
+          </div>
         </div>
       </div>
 
       <style>{`
-        @media (max-width: 768px) {
-          #contact > div > div:nth-child(2) { grid-template-columns: 1fr !important; gap: 40px !important; }
-          #contact > div > div:nth-child(2) > div:last-child { padding: 32px 24px !important; }
-          #contact > div > div:nth-child(2) > div:last-child > div > div:first-child { grid-template-columns: 1fr !important; }
+        @keyframes slideDown {
+          from { opacity: 0; transform: translateY(-12px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        @media (max-width: 900px) {
+          #contact > div {
+            grid-template-columns: 1fr !important;
+            gap: 40px !important;
+          }
         }
       `}</style>
     </section>
