@@ -105,7 +105,7 @@ export default function Contact() {
   };
 
   return (
-    <section id="contact" style={{ padding: '120px 40px', background: 'var(--color-bg)', overflow: 'hidden' }}>
+    <section id="contact" style={{padding: 'var(--section-pad-y) var(--section-pad-x)', background: 'var(--color-bg)', overflow: 'hidden' }}>
       <div style={{ maxWidth: 1240, margin: '0 auto' }} ref={ref}>
 
         {/* Header */}
@@ -125,7 +125,15 @@ export default function Contact() {
           }}>Let's Create Something Extraordinary</h2>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.4fr', gap: 64, alignItems: 'start' }}>
+      <div
+  className="contact-grid"
+  style={{
+    display: 'grid',
+    gridTemplateColumns: '1fr 1.4fr',
+    gap: 64,
+    alignItems: 'start',
+  }}
+>
 
           {/* Left — contact info */}
           <div style={{
@@ -184,7 +192,10 @@ export default function Contact() {
                 fontFamily: 'var(--font-body)', fontSize: 10, letterSpacing: '0.35em',
                 textTransform: 'uppercase', color: 'var(--color-gold)', marginBottom: 16,
               }}>Follow Us</p>
-              <div style={{ display: 'flex', gap: 16 }}>
+            <div
+  className="social-links"
+  style={{ display: 'flex', gap: 16 }}
+>
 
                 {/* Instagram */}
                 <a
@@ -308,7 +319,15 @@ export default function Contact() {
             )}
 
             {/* Form fields */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 20 }}>
+<div
+  className="contact-name-email"
+  style={{
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    gap: 20,
+    marginBottom: 20,
+  }}
+>
               <input
                 type="text"
                 name="name"
@@ -409,12 +428,18 @@ export default function Contact() {
           from { opacity: 0; transform: translateY(-12px); }
           to { opacity: 1; transform: translateY(0); }
         }
-        @media (max-width: 900px) {
-          #contact > div {
-            grid-template-columns: 1fr !important;
-            gap: 40px !important;
-          }
-        }
+      @media (max-width: 900px) {
+  .contact-grid {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+}
+@media (max-width: 600px) {
+  #contact h2 {
+    font-size: 42px !important;
+    line-height: 1.15 !important;
+  }
+}
       `}</style>
     </section>
   );
