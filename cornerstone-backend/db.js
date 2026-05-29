@@ -1,43 +1,52 @@
 const mongoose = require('mongoose');
 
-// ── Connection options ─────────────────────────────────────
 const OPTIONS = {
-  serverSelectionTimeoutMS: 5000,   // fail fast if unreachable
+  serverSelectionTimeoutMS: 10000,
+  bufferCommands: false,
 };
 
-// ── Connect ────────────────────────────────────────────────
+// Cache connection across serverless invocations
+let cached = global._mongooseCache;
+if (!cached) {
+  cached = global._mongooseCache = { conn: null, promise: null };
+}
+
 async function connectDB() {
   const uri = process.env.MONGO_URI;
+  if (!uri) throw new Error('MONGO_URI is not defined');
 
-  if (!uri) {
-    throw new Error('MONGO_URI is not defined in your .env file');
+  // Return cached connection if already connected
+  if (cached.conn && mongoose.connection.readyState === 1) {
+    return cached.conn;
+  }
+
+  if (!cached.promise) {
+    console.log('MONGO_URI:', uri.replace(/\/\/.*:/, '//***:'));
+    cached.promise = mongoose.connect(uri, OPTIONS).then((m) => {
+      console.log(`✅ MongoDB connected: ${m.connection.host}`);
+      return m;
+    });
   }
 
   try {
-    console.log("MONGO_URI:", process.env.MONGO_URI?.replace(/\/\/.*:/, "//***:"));
-    await mongoose.connect(uri, OPTIONS);
-    console.log(`✅  MongoDB connected: ${mongoose.connection.host}`);
+    cached.conn = await cached.promise;
   } catch (err) {
-  console.error("ERROR NAME:", err.name);
-  console.error("ERROR MESSAGE:", err.message);
-  console.error("ERROR CAUSE:", err.cause);
-  console.error(err);
-}
+    cached.promise = null;
+    console.error('MongoDB connection error:', err.message);
+    throw err;
+  }
+
+  return cached.conn;
 }
 
-// ── Connection event listeners ─────────────────────────────
 mongoose.connection.on('disconnected', () => {
-  console.warn('⚠️   MongoDB disconnected. Attempting reconnect…');
+  console.warn('⚠️ MongoDB disconnected');
+  cached.conn = null;
+  cached.promise = null;
 });
 
-mongoose.connection.on('reconnected', () => {
-  console.log('✅  MongoDB reconnected');
-});
-
-// ── Graceful shutdown ──────────────────────────────────────
 async function closeDB() {
   await mongoose.connection.close();
-  console.log('MongoDB connection closed.');
 }
 
 process.on('SIGINT',  async () => { await closeDB(); process.exit(0); });

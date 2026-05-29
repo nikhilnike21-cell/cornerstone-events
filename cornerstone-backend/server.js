@@ -14,6 +14,8 @@ const PORT = process.env.PORT || 3000;
 const corsOptions = {
   origin: [
     process.env.FRONTEND_URL || 'http://localhost:3000',
+    'https://cornerstoneevents.in',
+    'https://www.cornerstoneevents.in',
     'http://localhost:3001',
     'http://localhost:5003',
   ],
@@ -27,6 +29,17 @@ app.use(cors(corsOptions));
 // ── Body parsing ──────────────────────────────────────────
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// ── Ensure DB connected on every serverless invocation ────
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    console.error('DB connection failed:', err.message);
+    next(); // continue anyway so /health still responds
+  }
+});
 
 // ── Health check (for Vercel) ─────────────────────────────
 app.get('/health', (req, res) => {
