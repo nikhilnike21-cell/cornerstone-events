@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const fs = require('fs');
 
 const { connectDB } = require('./db');
 const bookingRoutes = require('./routes/bookings');
@@ -27,9 +28,6 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// ── Static admin dashboard ────────────────────────────────
-app.use(express.static(path.join(__dirname, 'public')));
-
 // ── Health check (for Vercel) ─────────────────────────────
 app.get('/health', (req, res) => {
   const { readyState } = require('mongoose').connection;
@@ -44,12 +42,29 @@ app.get('/health', (req, res) => {
 // ── API routes ────────────────────────────────────────────
 app.use('/api/bookings', bookingRoutes);
 
-// ── Admin dashboard ───────────────────────────────────────
+// ── Admin dashboard (EXPLICIT ROUTE - runs BEFORE static) ─
 app.get('/admin', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'admin.html'));
+  const adminPath = path.join(__dirname, 'public', 'admin.html');
+  
+  // Check if file exists
+  if (!fs.existsSync(adminPath)) {
+    console.error(`Admin file not found at: ${adminPath}`);
+    return res.status(404).json({ 
+      error: 'Admin dashboard not found',
+      lookingAt: adminPath,
+      __dirname: __dirname,
+      cwd: process.cwd()
+    });
+  }
+  
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  res.sendFile(adminPath);
 });
 
-// ── 404 ───────────────────────────────────────────────────
+// ── Static file serving (for other public assets) ────────
+app.use(express.static(path.join(__dirname, 'public')));
+
+// ── 404 handler ───────────────────────────────────────────
 app.use((req, res) => {
   res.status(404).json({ error: 'Route not found.' });
 });
@@ -61,9 +76,7 @@ app.use((err, req, res, next) => {
 });
 
 // ── Initialize server ─────────────────────────────────────
-// Connect to MongoDB and start server
 connectDB().then(() => {
-  // For local development
   if (process.env.NODE_ENV !== 'production') {
     app.listen(PORT, () => {
       console.log(`\n🚀  Server running  → http://localhost:${PORT}`);
@@ -73,11 +86,9 @@ connectDB().then(() => {
   }
 }).catch((err) => {
   console.error('Failed to start server:', err.message);
-  // Don't exit in production (Vercel serverless)
   if (process.env.NODE_ENV !== 'production') {
     process.exit(1);
   }
 });
 
-// ── Export for Vercel serverless ──────────────────────────
 module.exports = app;
