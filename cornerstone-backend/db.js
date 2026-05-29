@@ -14,6 +14,7 @@ async function connectDB() {
   }
 
   try {
+    console.log("MONGO_URI:", process.env.MONGO_URI?.replace(/\/\/.*:/, "//***:"));
     await mongoose.connect(uri, OPTIONS);
     console.log(`✅  MongoDB connected: ${mongoose.connection.host}`);
   } catch (err) {
