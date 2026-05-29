@@ -18,7 +18,6 @@ async function connectDB() {
     console.log(`✅  MongoDB connected: ${mongoose.connection.host}`);
   } catch (err) {
     console.error('❌  MongoDB connection error:', err.message);
-    process.exit(1);   // crash early — nothing works without a DB
   }
 }
 
