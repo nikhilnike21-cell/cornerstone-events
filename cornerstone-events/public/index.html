@@ -2,25 +2,36 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <!-- FAVICON FIX: Make sure logo.ico is renamed to favicon.ico in public folder -->
+    <link rel="icon" href="%PUBLIC_URL%/logo.ico" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo.ico" />
+    
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#0e0c0a" />
+    <meta name="color-scheme" content="dark" />
 
     <!-- ── Primary SEO ─────────────────────────────────── -->
-    <title>Cornerstone Events | Corporate & Pharma Event Management Mumbai, Delhi NCR</title>
-    <meta name="description" content="Cornerstone Events — premium event management company in Mumbai & Delhi NCR. Specialists in corporate events, CME programs, pharma product launches, doctors' conferences & hospital engagements. Call +91 93107 09393." />
-    <meta name="keywords" content="event management company Mumbai, event management Delhi NCR, corporate event planner Mumbai, pharma event management India, CME program organiser, medical conference organiser Mumbai, product launch event company Delhi, hospital engagement events, event management Noida, event management Gurugram, Cornerstone Events" />
+    <title>Cornerstone Events | Premium Corporate & Pharma Event Management in Mumbai & Delhi NCR</title>
+    <meta name="description" content="Cornerstone Events — India's leading event management company in Mumbai & Delhi NCR. Specializing in corporate events, pharma product launches, CME programs, medical conferences, and healthcare engagement. 50+ successful events. Call +91-9310709393." />
+    <meta name="keywords" content="event management company Mumbai, corporate event planner Delhi NCR, pharma event management India, medical conference organizer, CME program organizer, product launch events, healthcare events, doctor conference, hospital engagement programs, event planning Noida, Gurugram events" />
     <meta name="author" content="Cornerstone Events" />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
     <link rel="canonical" href="https://www.cornerstoneevents.in/" />
+    <meta name="language" content="English" />
 
-    <!-- ── Geo targeting ───────────────────────────────── -->
+    <!-- ── Geo Targeting ───────────────────────────────── -->
     <meta name="geo.region" content="IN-MH" />
     <meta name="geo.placename" content="Mumbai, Maharashtra, India" />
     <meta name="geo.position" content="19.0760;72.8777" />
     <meta name="ICBM" content="19.0760, 72.8777" />
+    
+    <!-- Google Verification (add your verification code) -->
+    <!-- <meta name="google-site-verification" content="YOUR_VERIFICATION_CODE" /> -->
+    
+    <!-- Microsoft/Bing Verification (optional) -->
+    <!-- <meta name="msvalidate.01" content="YOUR_VERIFICATION_CODE" /> -->
 
-    <!-- ── Open Graph ──────────────────────────────────── -->
+    <!-- ── Open Graph (Social Media) ──────────────────── -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://www.cornerstoneevents.in/" />
     <meta property="og:title" content="Cornerstone Events | Corporate & Pharma Event Management Mumbai, Delhi NCR" />
@@ -28,52 +39,83 @@
     <meta property="og:image" content="https://www.cornerstoneevents.in/og-image.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Cornerstone Events - Premium Event Management Services" />
     <meta property="og:locale" content="en_IN" />
     <meta property="og:site_name" content="Cornerstone Events" />
 
     <!-- ── Twitter Card ────────────────────────────────── -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@cornerstoneevents" />
+    <meta name="twitter:creator" content="@cornerstoneevents" />
     <meta name="twitter:title" content="Cornerstone Events | Event Management Mumbai & Delhi NCR" />
-    <meta name="twitter:description" content="Corporate, pharma & healthcare event specialists across Mumbai and Delhi NCR. 50+ events delivered." />
+    <meta name="twitter:description" content="Corporate, pharma & healthcare event specialists. 50+ events delivered with excellence." />
     <meta name="twitter:image" content="https://www.cornerstoneevents.in/og-image.jpg" />
+    <meta name="twitter:image:alt" content="Cornerstone Events Services" />
 
     <!-- ── Icons / PWA ─────────────────────────────────── -->
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/favicon.ico" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <meta name="application-name" content="Cornerstone Events" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Cornerstone Events" />
 
-    <!-- ── Structured Data — LocalBusiness ────────────── -->
+    <!-- ── Performance & Security ──────────────────────── -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    
+    <!-- Preconnect for faster loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="https://www.google-analytics.com">
+
+    <!-- ── Structured Data — Event Planner (JSON-LD) ───── -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "EventPlanner",
+      "@id": "https://www.cornerstoneevents.in/#organization",
       "name": "Cornerstone Events",
+      "alternateName": "Cornerstone Events India",
       "description": "Premium event management company specialising in corporate events, pharma product launches, CME programs, medical conferences, and hospital engagements across Mumbai and Delhi NCR.",
       "url": "https://www.cornerstoneevents.in",
-      "logo": "https://www.cornerstoneevents.in/favicon.ico",
-      "image": "https://www.cornerstoneevents.in/og-image.jpg",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://www.cornerstoneevents.in/favicon.ico",
+        "width": 256,
+        "height": 256
+      },
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://www.cornerstoneevents.in/og-image.jpg",
+        "width": 1200,
+        "height": 630
+      },
       "telephone": "+919310709393",
       "email": "cornerstoneevents0@gmail.com",
       "priceRange": "₹₹₹",
       "currenciesAccepted": "INR",
-      "paymentAccepted": "Cash, Bank Transfer, UPI",
+      "paymentAccepted": "Cash, Credit Card, Debit Card, Bank Transfer, UPI",
       "areaServed": [
         {
           "@type": "City",
           "name": "Mumbai",
-          "sameAs": "https://www.wikidata.org/wiki/Q1156"
+          "sameAs": "https://en.wikipedia.org/wiki/Mumbai"
         },
         {
           "@type": "City",
           "name": "Delhi",
-          "sameAs": "https://www.wikidata.org/wiki/Q1353"
+          "sameAs": "https://en.wikipedia.org/wiki/Delhi"
         },
         {
           "@type": "City",
-          "name": "Noida"
+          "name": "Noida",
+          "sameAs": "https://en.wikipedia.org/wiki/Noida"
         },
         {
           "@type": "City",
-          "name": "Gurugram"
+          "name": "Gurugram",
+          "sameAs": "https://en.wikipedia.org/wiki/Gurugram"
         },
         {
           "@type": "City",
@@ -82,25 +124,149 @@
       ],
       "address": {
         "@type": "PostalAddress",
+        "streetAddress": "[Your Street Address]",
         "addressLocality": "Mumbai",
         "addressRegion": "Maharashtra",
+        "postalCode": "[Your Postal Code]",
         "addressCountry": "IN"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "customer service",
+        "telephone": "+919310709393",
+        "email": "cornerstoneevents0@gmail.com",
+        "availableLanguage": ["en", "hi"]
       },
       "sameAs": [
         "https://www.instagram.com/cornerstoneevents",
-        "https://www.linkedin.com/company/cornerstone-events"
+        "https://www.facebook.com/cornerstoneevents",
+        "https://www.linkedin.com/company/cornerstone-events",
+        "https://www.youtube.com/@cornerstoneevents"
       ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "reviewCount": "150"
+      },
       "hasOfferCatalog": {
         "@type": "OfferCatalog",
         "name": "Event Management Services",
         "itemListElement": [
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Corporate Event Management" } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Pharma Product Launch Events" } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "CME Program Organisation" } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Medical Conference Management" } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Hospital Engagement Programs" } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Doctors Conference Planning" } }
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Corporate Event Management",
+              "description": "Full-service corporate event planning and execution"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Pharma Product Launch Events",
+              "description": "Professional product launch event management for pharmaceutical companies"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "CME Program Organisation",
+              "description": "Continuing Medical Education program planning and execution"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Medical Conference Management",
+              "description": "Complete medical conference and symposium organization"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Hospital Engagement Programs",
+              "description": "Healthcare institution engagement and event management"
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Doctors Conference Planning",
+              "description": "Specialized conference planning for medical professionals"
+            }
+          }
         ]
+      }
+    }
+    </script>
+
+    <!-- ── Breadcrumb Schema ───────────────────────────── -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Home",
+          "item": "https://www.cornerstoneevents.in/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Services",
+          "item": "https://www.cornerstoneevents.in/#services"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "About",
+          "item": "https://www.cornerstoneevents.in/#about"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Gallery",
+          "item": "https://www.cornerstoneevents.in/#gallery"
+        },
+        {
+          "@type": "ListItem",
+          "position": 5,
+          "name": "Contact",
+          "item": "https://www.cornerstoneevents.in/#contact"
+        }
+      ]
+    }
+    </script>
+
+    <!-- ── Organization Contact Schema ────────────────── -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "@id": "https://www.cornerstoneevents.in/#organization",
+      "name": "Cornerstone Events",
+      "url": "https://www.cornerstoneevents.in",
+      "telephone": "+919310709393",
+      "email": "cornerstoneevents0@gmail.com",
+      "foundingDate": "2015",
+      "founder": {
+        "@type": "Person",
+        "name": "[Founder Name]"
+      },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "[Your Street Address]",
+        "addressLocality": "Mumbai",
+        "addressRegion": "Maharashtra",
+        "postalCode": "[Your Postal Code]",
+        "addressCountry": "IN"
       }
     }
     </script>

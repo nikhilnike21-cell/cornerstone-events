@@ -49,22 +49,25 @@ function MagneticCTA({ children, href }) {
 }
 
 export default function Navbar() {
-  const [scrolled, setScrolled]   = useState(false);
-  const [open, setOpen]           = useState(false);
-  const [active, setActive]       = useState('');
-  const [progress, setProgress]   = useState(0);
-  const [visible, setVisible]     = useState(true);
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen]         = useState(false);
+  const [active, setActive]     = useState('');
+  const [progress, setProgress] = useState(0);
+  const [visible, setVisible]   = useState(true);
   const lastY = useRef(0);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [open]);
 
   useEffect(() => {
     const onScroll = () => {
       const y = window.scrollY;
       const max = document.body.scrollHeight - window.innerHeight;
-
       setScrolled(y > 60);
       setProgress((y / max) * 100);
-
-      // Hide navbar when scrolling down fast, show when scrolling up
       if (y > lastY.current + 8 && y > 400) setVisible(false);
       else if (y < lastY.current - 4) setVisible(true);
       lastY.current = y;
@@ -83,9 +86,7 @@ export default function Navbar() {
       <nav style={{
         position: 'fixed', top: 0, left: 0, right: 0, zIndex: 1000,
         padding: scrolled ? '13px 40px' : '24px 40px',
-        background: scrolled
-          ? 'rgba(14,12,10,0.82)'
-          : 'transparent',
+        background: scrolled ? 'rgba(14,12,10,0.88)' : 'transparent',
         backdropFilter: scrolled ? 'blur(24px) saturate(160%)' : 'none',
         WebkitBackdropFilter: scrolled ? 'blur(24px) saturate(160%)' : 'none',
         borderBottom: scrolled ? '1px solid rgba(46,39,32,0.7)' : '1px solid transparent',
@@ -106,18 +107,19 @@ export default function Navbar() {
         }} />
 
         {/* Logo */}
-        <a href="\" style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-          <span style={{
-            fontFamily: 'var(--font-display)', fontSize: 22, fontWeight: 600,
-            letterSpacing: '0.06em', color: 'var(--color-gold)',
-            transition: 'text-shadow 0.3s',
-          }}
+        <a href="/" style={{ display: 'flex', flexDirection: 'column', gap: 0, flex: '0 0 auto' }}>
+          <span
+            style={{
+              fontFamily: 'var(--font-display)', fontSize: 'clamp(15px, 2.5vw, 22px)',
+              fontWeight: 600, letterSpacing: '0.06em', color: 'var(--color-gold)',
+              transition: 'text-shadow 0.3s', whiteSpace: 'nowrap',
+            }}
             onMouseEnter={e => e.currentTarget.style.textShadow = '0 0 20px rgba(201,169,110,0.5)'}
             onMouseLeave={e => e.currentTarget.style.textShadow = 'none'}
           >CORNERSTONE EVENTS</span>
           <span style={{
-            fontFamily: 'var(--font-body)', fontSize: 9.5, fontWeight: 400,
-            letterSpacing: '0.35em', textTransform: 'uppercase',
+            fontFamily: 'var(--font-body)', fontSize: 'clamp(7px, 1vw, 9.5px)',
+            fontWeight: 400, letterSpacing: '0.35em', textTransform: 'uppercase',
             color: 'var(--color-muted)', marginTop: -2,
           }}>EVENT PLAN . DESIGN . EXECUTE</span>
         </a>
@@ -134,19 +136,12 @@ export default function Navbar() {
                   letterSpacing: '0.22em', textTransform: 'uppercase',
                   color: active === link.href ? 'var(--color-gold)' : 'var(--color-muted)',
                   transition: 'color 0.2s',
-                  paddingBottom: 3,
-                  position: 'relative',
-                  cursor: 'none',
+                  paddingBottom: 3, position: 'relative', cursor: 'none',
                 }}
-                onMouseEnter={e => {
-                  if (active !== link.href) e.target.style.color = 'var(--color-beige)';
-                }}
-                onMouseLeave={e => {
-                  if (active !== link.href) e.target.style.color = 'var(--color-muted)';
-                }}
+                onMouseEnter={e => { if (active !== link.href) e.target.style.color = 'var(--color-beige)'; }}
+                onMouseLeave={e => { if (active !== link.href) e.target.style.color = 'var(--color-muted)'; }}
               >
                 {link.label}
-                {/* Active underline */}
                 <span style={{
                   position: 'absolute', bottom: 0, left: 0,
                   width: active === link.href ? '100%' : '0%',
@@ -158,18 +153,22 @@ export default function Navbar() {
           ))}
         </ul>
 
-        {/* Magnetic CTA */}
+        {/* Magnetic CTA — desktop only */}
         <div className="nav-cta">
           <MagneticCTA href="#contact">Book Now</MagneticCTA>
         </div>
 
-        {/* Hamburger */}
+        {/* Hamburger — tablet & mobile */}
         <button
           className="hamburger"
           onClick={() => setOpen(!open)}
+          aria-label={open ? 'Close menu' : 'Open menu'}
+          aria-expanded={open}
           style={{
             display: 'none', flexDirection: 'column', gap: 5,
-            background: 'none', border: 'none', cursor: 'pointer', padding: 4,
+            background: 'none', border: 'none', cursor: 'pointer',
+            padding: 8, marginRight: -8,
+            zIndex: 1002,
           }}
         >
           {[0, 1, 2].map(i => (
@@ -180,7 +179,7 @@ export default function Navbar() {
               transformOrigin: 'center',
               transform: open
                 ? i === 0 ? 'rotate(45deg) translate(4.5px, 4.5px)'
-                : i === 1 ? 'scaleX(0) opacity(0)'
+                : i === 1 ? 'scaleX(0)'
                 : 'rotate(-45deg) translate(4.5px, -4.5px)'
                 : 'none',
               opacity: open && i === 1 ? 0 : 1,
@@ -189,22 +188,29 @@ export default function Navbar() {
         </button>
       </nav>
 
-      {/* Mobile fullscreen menu */}
-      <div style={{
-        position: 'fixed', inset: 0, zIndex: 999,
-        background: 'rgba(14,12,10,0.97)',
-        backdropFilter: 'blur(20px)',
-        display: 'flex', flexDirection: 'column',
-        alignItems: 'center', justifyContent: 'center', gap: 40,
-        transform: open ? 'translateX(0)' : 'translateX(100%)',
-        transition: 'transform 0.5s var(--ease-out)',
-      }} className="mobile-menu">
-
-        {/* Decorative ring in bg */}
+      {/* ── Mobile fullscreen menu ── */}
+      <div
+        aria-hidden={!open}
+        style={{
+          position: 'fixed', inset: 0, zIndex: 999,
+          background: 'rgba(14,12,10,0.97)',
+          backdropFilter: 'blur(20px)',
+          WebkitBackdropFilter: 'blur(20px)',
+          display: 'flex', flexDirection: 'column',
+          alignItems: 'center', justifyContent: 'center', gap: 32,
+          transform: open ? 'translateX(0)' : 'translateX(100%)',
+          transition: 'transform 0.5s var(--ease-out)',
+          overflowY: 'auto',
+          paddingTop: 80,
+          paddingBottom: 40,
+        }}
+        className="mobile-menu"
+      >
+        {/* Decorative ring */}
         <div style={{
           position: 'absolute', top: '50%', left: '50%',
           transform: 'translate(-50%,-50%)',
-          width: 500, height: 500, borderRadius: '50%',
+          width: 400, height: 400, borderRadius: '50%',
           border: '1px solid rgba(201,169,110,0.06)',
           pointerEvents: 'none',
         }} />
@@ -215,30 +221,50 @@ export default function Navbar() {
             href={link.href}
             onClick={() => handleNav(link.href)}
             style={{
-              fontFamily: 'var(--font-display)', fontSize: 36,
+              fontFamily: 'var(--font-display)', fontSize: 'clamp(26px, 7vw, 36px)',
               fontStyle: 'italic', color: 'var(--color-beige)',
               transition: 'color 0.2s, transform 0.2s',
               transitionDelay: open ? `${i * 0.06}s` : '0s',
               opacity: open ? 1 : 0,
               transform: open ? 'translateX(0)' : 'translateX(30px)',
+              letterSpacing: '0.02em',
             }}
-            onMouseEnter={e => {
-              e.currentTarget.style.color = 'var(--color-gold)';
-              e.currentTarget.style.transform = 'translateX(6px)';
-            }}
-            onMouseLeave={e => {
-              e.currentTarget.style.color = 'var(--color-beige)';
-              e.currentTarget.style.transform = 'translateX(0)';
-            }}
+            onMouseEnter={e => { e.currentTarget.style.color = 'var(--color-gold)'; e.currentTarget.style.transform = 'translateX(6px)'; }}
+            onMouseLeave={e => { e.currentTarget.style.color = 'var(--color-beige)'; e.currentTarget.style.transform = 'translateX(0)'; }}
+            onTouchStart={e => e.currentTarget.style.color = 'var(--color-gold)'}
+            onTouchEnd={e => { setTimeout(() => { if (e.currentTarget) e.currentTarget.style.color = 'var(--color-beige)'; }, 300); }}
           >{link.label}</a>
         ))}
+
+        {/* CTA in mobile menu */}
+        <a
+          href="#contact"
+          onClick={() => setOpen(false)}
+          style={{
+            marginTop: 12,
+            fontFamily: 'var(--font-body)', fontSize: 12, fontWeight: 500,
+            letterSpacing: '0.22em', textTransform: 'uppercase',
+            padding: '13px 36px',
+            border: '1px solid var(--color-gold)',
+            color: 'var(--color-gold)',
+            background: 'transparent',
+            borderRadius: 'var(--radius-sm)',
+            opacity: open ? 1 : 0,
+            transition: `opacity 0.6s ${NAV_LINKS.length * 0.06 + 0.1}s var(--ease-out)`,
+          }}
+        >Book Now</a>
       </div>
 
       <style>{`
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
           .nav-desktop { display: none !important; }
           .nav-cta     { display: none !important; }
           .hamburger   { display: flex !important; }
+          nav { padding-left: 28px !important; padding-right: 28px !important; }
+        }
+        @media (max-width: 600px) {
+          nav { padding-left: 20px !important; padding-right: 20px !important; }
+          nav[style*="padding"] { padding-top: 14px !important; padding-bottom: 14px !important; }
         }
       `}</style>
     </>

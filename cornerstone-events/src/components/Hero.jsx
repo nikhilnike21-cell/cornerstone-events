@@ -2,8 +2,17 @@ import { useEffect, useRef, useState } from 'react';
 
 function MagneticButton({ href, children, filled = false, style: extraStyle = {} }) {
   const ref = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth <= 600);
+    const onResize = () => setIsMobile(window.innerWidth <= 600);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
 
   const handleMove = (e) => {
+    if (isMobile) return;
     const btn = ref.current;
     if (!btn) return;
     const rect = btn.getBoundingClientRect();
@@ -23,7 +32,6 @@ function MagneticButton({ href, children, filled = false, style: extraStyle = {}
       ref={ref}
       href={href}
       onMouseMove={handleMove}
-      
       style={{
         display: 'inline-block',
         fontFamily: 'var(--font-body)', fontSize: 12, fontWeight: 500,
@@ -34,7 +42,8 @@ function MagneticButton({ href, children, filled = false, style: extraStyle = {}
         border: filled ? 'none' : '1px solid rgba(232,220,200,0.35)',
         borderRadius: 'var(--radius-sm)',
         transition: 'transform 0.4s var(--ease-out), background 0.25s, color 0.25s, border-color 0.25s, box-shadow 0.3s',
-        cursor: 'none',
+        cursor: isMobile ? 'pointer' : 'none',
+        textAlign: 'center',
         ...extraStyle,
       }}
       onMouseEnter={e => {
@@ -63,19 +72,29 @@ function MagneticButton({ href, children, filled = false, style: extraStyle = {}
 }
 
 export default function Hero() {
-  const bgRef     = useRef(null);
+  const bgRef      = useRef(null);
   const contentRef = useRef(null);
   const [scrollY, setScrollY] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
-  // Parallax on scroll
   useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth <= 600);
+    check();
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
+  // Parallax on scroll — disabled on mobile for perf
+  useEffect(() => {
+    if (isMobile) return;
     const onScroll = () => setScrollY(window.scrollY);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  }, [isMobile]);
 
-  // Subtle mouse parallax on hero content
+  // Subtle mouse parallax — desktop only
   useEffect(() => {
+    if (isMobile) return;
     const el = contentRef.current;
     if (!el) return;
     const handleMove = (e) => {
@@ -92,11 +111,11 @@ export default function Hero() {
       window.removeEventListener('mousemove', handleMove);
       window.removeEventListener('mouseleave', handleLeave);
     };
-  }, []);
+  }, [isMobile]);
 
   return (
     <section id="hero" style={{
-      position: 'relative', height: '100vh', minHeight: 700,
+      position: 'relative', height: '100svh', minHeight: 600,
       display: 'flex', alignItems: 'center', justifyContent: 'center',
       overflow: 'hidden',
     }}>
@@ -109,7 +128,7 @@ export default function Hero() {
           backgroundImage: `url('/Homepage.png')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center 40%',
-          transform: `scale(1.12) translateY(${scrollY * 0.22}px)`,
+          transform: `scale(1.12) translateY(${isMobile ? 0 : scrollY * 0.22}px)`,
           transition: 'transform 0.05s linear',
           willChange: 'transform',
           animation: 'heroZoom 8s ease-in-out infinite alternate',
@@ -119,50 +138,47 @@ export default function Hero() {
       {/* ── Gradient overlay ── */}
       <div style={{
         position: 'absolute', inset: 0,
-        background: 'linear-gradient(to bottom, rgba(14,12,10,0.60) 0%, rgba(14,12,10,0.38) 45%, rgba(14,12,10,0.90) 100%)',
+        background: 'linear-gradient(to bottom, rgba(14,12,10,0.60) 0%, rgba(14,12,10,0.38) 45%, rgba(14,12,10,0.92) 100%)',
       }} />
 
       {/* ── Noise grain ── */}
       <div className="noise-overlay" />
 
-      {/* ── Ambient floating orbs ── */}
-      <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none' }}>
-        {[
-          { w: 420, h: 420, top: '8%',  left: '12%',  dur: '18s', delay: '0s',   anim: 'floatA', opacity: 0.055 },
-          { w: 320, h: 320, top: '55%', left: '72%',  dur: '22s', delay: '-6s',  anim: 'floatB', opacity: 0.045 },
-          { w: 260, h: 260, top: '70%', left: '18%',  dur: '26s', delay: '-12s', anim: 'floatC', opacity: 0.035 },
-          { w: 180, h: 180, top: '20%', left: '80%',  dur: '20s', delay: '-4s',  anim: 'floatA', opacity: 0.04  },
-          { w: 140, h: 140, top: '40%', left: '45%',  dur: '16s', delay: '-9s',  anim: 'floatB', opacity: 0.03  },
-        ].map((orb, i) => (
-          <div key={i} style={{
-            position: 'absolute',
-            width: orb.w, height: orb.h,
-            top: orb.top, left: orb.left,
-            borderRadius: '50%',
-            background: `radial-gradient(circle, rgba(201,169,110,${orb.opacity * 2.5}) 0%, rgba(201,169,110,${orb.opacity}) 40%, transparent 70%)`,
-            animation: `${orb.anim} ${orb.dur} ease-in-out ${orb.delay} infinite`,
-            filter: 'blur(1px)',
+      {/* ── Ambient floating orbs — hidden on mobile for perf ── */}
+      {!isMobile && (
+        <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none' }}>
+          {[
+            { w: 420, h: 420, top: '8%',  left: '12%',  dur: '18s', delay: '0s',   anim: 'floatA', opacity: 0.055 },
+            { w: 320, h: 320, top: '55%', left: '72%',  dur: '22s', delay: '-6s',  anim: 'floatB', opacity: 0.045 },
+            { w: 260, h: 260, top: '70%', left: '18%',  dur: '26s', delay: '-12s', anim: 'floatC', opacity: 0.035 },
+            { w: 180, h: 180, top: '20%', left: '80%',  dur: '20s', delay: '-4s',  anim: 'floatA', opacity: 0.04  },
+          ].map((orb, i) => (
+            <div key={i} style={{
+              position: 'absolute',
+              width: orb.w, height: orb.h,
+              top: orb.top, left: orb.left,
+              borderRadius: '50%',
+              background: `radial-gradient(circle, rgba(201,169,110,${orb.opacity * 2.5}) 0%, rgba(201,169,110,${orb.opacity}) 40%, transparent 70%)`,
+              animation: `${orb.anim} ${orb.dur} ease-in-out ${orb.delay} infinite`,
+              filter: 'blur(1px)',
+            }} />
+          ))}
+          <div style={{
+            position: 'absolute', top: '50%', left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: 600, height: 600,
+            border: '1px solid rgba(201,169,110,0.06)', borderRadius: '50%',
+            animation: 'rotateSlow 60s linear infinite',
           }} />
-        ))}
-
-        {/* Decorative geometric ring */}
-        <div style={{
-          position: 'absolute', top: '50%', left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: 600, height: 600,
-          border: '1px solid rgba(201,169,110,0.06)',
-          borderRadius: '50%',
-          animation: 'rotateSlow 60s linear infinite',
-        }} />
-        <div style={{
-          position: 'absolute', top: '50%', left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: 820, height: 820,
-          border: '1px solid rgba(201,169,110,0.03)',
-          borderRadius: '50%',
-          animation: 'rotateSlow 90s linear infinite reverse',
-        }} />
-      </div>
+          <div style={{
+            position: 'absolute', top: '50%', left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: 820, height: 820,
+            border: '1px solid rgba(201,169,110,0.03)', borderRadius: '50%',
+            animation: 'rotateSlow 90s linear infinite reverse',
+          }} />
+        </div>
+      )}
 
       {/* ── Main content ── */}
       <div
@@ -172,15 +188,15 @@ export default function Hero() {
           padding: '0 24px', maxWidth: 920,
           transition: 'transform 0.6s var(--ease-out)',
           willChange: 'transform',
+          width: '100%',
         }}
       >
         {/* Eyebrow */}
         <p style={{
-          fontFamily: 'var(--font-body)', fontSize: 11,
+          fontFamily: 'var(--font-body)', fontSize: 'clamp(9px, 2vw, 11px)',
           letterSpacing: '0.45em', textTransform: 'uppercase',
           color: 'var(--color-gold)', marginBottom: 28,
-          animation: 'fadeIn 1.4s ease forwards',
-          opacity: 0,
+          animation: 'fadeIn 1.4s ease forwards', opacity: 0,
         }}>
           ✦ &nbsp; Corporate . Healthcare . Pharma Events &nbsp; ✦
         </p>
@@ -188,16 +204,13 @@ export default function Hero() {
         {/* Headline */}
         <h1 style={{
           fontFamily: 'var(--font-display)', fontWeight: 300,
-          fontSize: 'clamp(52px, 8vw, 112px)',
+          fontSize: 'clamp(44px, 8vw, 112px)',
           lineHeight: 1.02, letterSpacing: '-0.01em',
           color: 'var(--color-beige-lt)',
           animation: 'fadeUp 1s 0.25s ease forwards', opacity: 0,
         }}>
           Excellence<br />
-          <em
-            className="shimmer-text"
-            style={{ fontStyle: 'italic' }}
-          >
+          <em className="shimmer-text" style={{ fontStyle: 'italic' }}>
             Flawlessly Executed.
           </em>
         </h1>
@@ -210,16 +223,13 @@ export default function Hero() {
           transformOrigin: 'left center',
           opacity: 0,
           animationFillMode: 'forwards',
-        }}>
-          <style>{`
-            @keyframes lineExpand { from { width: 0; opacity: 0; } to { width: 48px; opacity: 1; } }
-          `}</style>
-        </div>
+        }} />
 
         {/* Subtext */}
         <p style={{
-          fontFamily: 'var(--font-body)', fontSize: 16, fontWeight: 300,
-          color: 'var(--color-beige)', maxWidth: 520, margin: '0 auto 44px',
+          fontFamily: 'var(--font-body)', fontSize: 'clamp(14px, 2.5vw, 16px)',
+          fontWeight: 300, color: 'var(--color-beige)',
+          maxWidth: 520, margin: '0 auto 44px',
           lineHeight: 1.85, letterSpacing: '0.02em',
           animation: 'fadeUp 1s 0.55s ease forwards', opacity: 0,
         }}>
@@ -227,22 +237,28 @@ export default function Hero() {
         </p>
 
         {/* CTA buttons */}
-        <div style={{
-          display: 'flex', gap: 20, justifyContent: 'center', flexWrap: 'wrap',
-          animation: 'fadeUp 1s 0.85s ease forwards', opacity: 0,
-        }}>
+        <div
+          className="hero-buttons"
+          style={{
+            display: 'flex', gap: 20, justifyContent: 'center', flexWrap: 'wrap',
+            animation: 'fadeUp 1s 0.85s ease forwards', opacity: 0,
+          }}
+        >
           <MagneticButton href="#contact" filled>Plan Your Event</MagneticButton>
           <MagneticButton href="#services">Explore Services</MagneticButton>
         </div>
       </div>
 
       {/* ── Scroll indicator ── */}
-      <div style={{
-        position: 'absolute', bottom: 36, left: '50%',
-        transform: 'translateX(-50%)',
-        display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8,
-        animation: 'fadeIn 2s 2s ease forwards', opacity: 0,
-      }}>
+      <div
+        className="hero-scroll-indicator"
+        style={{
+          position: 'absolute', bottom: 36, left: '50%',
+          transform: 'translateX(-50%)',
+          display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8,
+          animation: 'fadeIn 2s 2s ease forwards', opacity: 0,
+        }}
+      >
         <span style={{
           fontSize: 9, letterSpacing: '0.35em', textTransform: 'uppercase',
           color: 'var(--color-muted)',
@@ -253,6 +269,21 @@ export default function Hero() {
           animation: 'scrollLine 2.2s ease-in-out infinite',
         }} />
       </div>
+
+      <style>{`
+        @media (max-width: 600px) {
+          .hero-buttons {
+            flex-direction: column !important;
+            align-items: center !important;
+            gap: 14px !important;
+          }
+          .hero-buttons a {
+            width: 100% !important;
+            max-width: 280px !important;
+          }
+          .hero-scroll-indicator { display: none !important; }
+        }
+      `}</style>
     </section>
   );
 }
