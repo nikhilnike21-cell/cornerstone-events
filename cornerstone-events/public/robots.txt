@@ -23,10 +23,12 @@ Disallow: /print
 # Specific rules for Google
 User-agent: Googlebot
 Allow: /
+Crawl-delay: 0
 
 # Specific rules for Bing
 User-agent: Bingbot
 Allow: /
+Crawl-delay: 1
 
 # Crawl delay (requests per second)
 Request-rate: 1/1s
@@ -35,7 +37,7 @@ Request-rate: 1/1s
 Sitemap: https://www.cornerstoneevents.in/sitemap.xml
 Sitemap: https://www.cornerstoneevents.in/sitemap-images.xml
 
-# Block bad bots
+# Block bad bots (optional but recommended)
 User-agent: AhrefsBot
 Disallow: /
 
