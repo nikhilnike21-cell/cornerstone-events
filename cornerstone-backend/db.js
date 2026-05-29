@@ -18,8 +18,11 @@ async function connectDB() {
     await mongoose.connect(uri, OPTIONS);
     console.log(`✅  MongoDB connected: ${mongoose.connection.host}`);
   } catch (err) {
-    console.error('❌  MongoDB connection error:', err.message);
-  }
+  console.error("ERROR NAME:", err.name);
+  console.error("ERROR MESSAGE:", err.message);
+  console.error("ERROR CAUSE:", err.cause);
+  console.error(err);
+}
 }
 
 // ── Connection event listeners ─────────────────────────────
